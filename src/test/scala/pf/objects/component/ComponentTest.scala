@@ -1,36 +1,37 @@
-package pf.objects.stream
+package pf.objects.component
 
-import pf.objects.domain._
-import akka.Done
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Sink
 import org.scalatest.{Matchers, WordSpecLike}
+import pf.objects.domain.Behavior._
+import pf.objects.domain._
 
+import scala.concurrent.Await
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
 import scala.io.StdIn
 
-class StreamTest extends WordSpecLike with Matchers {
+class ComponentTest extends WordSpecLike with Matchers {
 
-  "PartialFunction as node in a computation graph" should {
-    "flow" in {
+  "PartialFunction as interactor" should {
+    "component" in {
 
       implicit val system = ActorSystem("akka-stream-partial-functions")
       implicit val materializer = ActorMaterializer()
 
-      val sink: Sink[State, Future[Done]] = Sink.foreach(println)
-
+      val interactor = Interactor[Event, State, State](logic, maxVolume)
+      val component = LogicComponent(State(), interactor, Sink.foreach(println))
 
       List(VolumeDown,
         GetVolume,
         Play("Taylor Swift"),
         GetTemperature("New York City, NY"),
         Stop)
-        .foreach(EchoScan(sink).receive)
+        .foreach(component.receive)
 
       val whenTerminated = system.terminate()
       Await.result(whenTerminated, Duration.Inf)
+
     }
 
     "wait" in {
