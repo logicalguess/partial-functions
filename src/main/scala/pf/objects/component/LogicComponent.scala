@@ -29,7 +29,6 @@ case class LogicComponent[I, O, S](init: S, interactor: Interactor[I, O, S], sin
   }
 }
 
-
 //val flow: Flow[Ivent, State, _] = Flow[Ivent].scan(State())((state: State, event: Event) => logic(event, state))
 //val flow: Flow[Ivent, State, _] = logic
 
