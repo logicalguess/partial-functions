@@ -15,7 +15,7 @@ class GraphTest extends WordSpecLike with Matchers {
   "PartialFunctions as nodes in graphs" should {
 
     "composition" in {
-      logicComposition(7) shouldBe "7!7#"
+      diamondComposition(7) shouldBe "7!7#"
     }
 
     "flow" in {

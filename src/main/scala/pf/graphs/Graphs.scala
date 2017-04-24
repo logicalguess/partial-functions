@@ -12,7 +12,7 @@ object Graphs {
   val hash: Function[String, String] = { s: String => s + "#" }
   val concatenate: Function[(String, String), String] = { s => s._1 + s._2 }
 
-  val logicComposition: Int => String = i => {
+  val diamondComposition: Int => String = i => {
     val s = convert(i)
     val b = bang(s)
     val h = hash(s)
@@ -22,7 +22,7 @@ object Graphs {
   implicit def FunctionToFlow[I, O](f: Function[I, O]): Flow[I, O, _] =
     Flow[I].map(f)
 
-  val diamondFlow = Flow.fromGraph(GraphDSL.create() { implicit builder =>
+  val diamondFlow: Flow[Int, String, _] = Flow.fromGraph(GraphDSL.create() { implicit builder =>
     import GraphDSL.Implicits._
 
     val input = builder.add(Flow[Int])

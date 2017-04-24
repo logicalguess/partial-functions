@@ -30,11 +30,6 @@ object Definition {
   val wakeUpTimeMap: Map[Person, LocalTime] =
     Map(dan -> LocalTime.of(6, 42), chuck -> LocalTime.of(7, 25))
 
-  implicit def mapToPartialFunction[K, V](m: Map[K, V]) = new PartialFunction[K, V] {
-    override def isDefinedAt(k: K): Boolean = m.contains(k)
-    override def apply(k: K): V = m(k)
-  }
-
   //predicate
   object Length extends Enumeration {
     type Length = Value

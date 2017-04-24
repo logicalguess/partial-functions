@@ -11,5 +11,5 @@ class FunctionalEcho {
     state
   }
 
-  def getState = state
+  def getState: State = state
 }

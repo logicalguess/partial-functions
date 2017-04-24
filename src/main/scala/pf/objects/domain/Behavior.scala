@@ -10,14 +10,17 @@ object Behavior {
     case (VolumeDown, s) => s.copy(s.volume - 1) //validate
     case (SetVolume(l), s) => s.copy(l) //validate
 
-    case (GetVolume, s) => s.copy(s.volume, s.playing, Some(s"The current volume is ${s.volume}")) //validate
+    case (GetVolume, s) => s.copy(s.volume, s.playing,
+      Some(s"The current volume is ${s.volume}")) //validate
 
     case (Play(p), s) => s.copy(s.volume, Some(p))
-    case (Stop, s) => if (s.playing.isDefined) s.copy(s.volume, None) else s
+    case (Stop, s) =>
+      if (s.playing.isDefined) s.copy(s.volume, None) else s
 
     case (GetTemperature(place), s) => {
       val temp = 70 //call service
-      s.copy(s.volume, s.playing, Some(s"The current temperature in $place is $temp degrees"))
+      s.copy(s.volume, s.playing,
+        Some(s"The current temperature in $place is $temp degrees"))
     }
   }
 
